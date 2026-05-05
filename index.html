@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Тренажёр: найди ошибки в доверенности</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f0f4f9;
+      font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, 'Roboto', sans-serif;
+      padding: 2rem 1.5rem;
+      color: #1a2c3e;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .document-card {
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .document-body {
+      padding: 2rem 2.2rem;
+      line-height: 1.65;
+      font-size: 1rem;
+      background: #ffffff;
+      user-select: text;
+    }
+
+    #selectableText {
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.7;
+    }
+
+    .user-highlight {
+      background-color: #5a9eff;
+      color: white;
+      border-radius: 5px;
+      padding: 0 2px;
+    }
+
+    .doc-date-right {
+      text-align: right;
+      margin-bottom: 1rem;
+      font-weight: normal;
+    }
+
+    .signature-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .signature-left {
+      font-weight: normal;
+    }
+
+    .signature-right {
+      font-weight: normal;
+    }
+
+    .doc-title {
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    #selectableText::selection {
+      background: #b8d9ff;
+    }
+
+    .action-panel {
+      background: white;
+      border-radius: 20px;
+      padding: 0.8rem 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button {
+      font-family: inherit;
+      font-weight: 500;
+      border: none;
+      padding: 0.6rem 1.5rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      background: #f0f4fa;
+      color: #1f4d73;
+      transition: all 0.2s;
+    }
+
+    button.primary {
+      background: #1f6e9c;
+      color: white;
+    }
+
+    button.primary:hover {
+      background: #0f5a84;
+      transform: translateY(-1px);
+    }
+
+    button.secondary {
+      background: #eef3fc;
+      border: 1px solid #cde2f5;
+    }
+
+    button.secondary:hover {
+      background: #e2edfc;
+    }
+
+    button.outline {
+      background: transparent;
+      border: 1px solid #95CAFA;
+      color: #1f6e9c;
+    }
+
+    .results-panel {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 1.2rem 1.6rem;
+      margin-top: 1rem;
+      border-left: 4px solid #95CAFA;
+    }
+
+    .mistake-feedback {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #2c3e50;
+    }
+
+    .mistake-feedback p {
+      margin-bottom: 0.8rem;
+    }
+
+    .mistake-feedback .error-item {
+      margin-bottom: 0.75rem;
+      padding-left: 0.5rem;
+    }
+
+    .correct-btn {
+      margin-top: 1rem;
+    }
+
+    .sample-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-card {
+      background: white;
+      max-width: 850px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 1.8rem 2rem;
+      box-shadow: 0 25px 40px rgba(0,0,0,0.2);
+      border-radius: 28px;
+    }
+
+    .close-modal {
+      float: right;
+      font-size: 1.8rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      line-height: 1;
+      color: #888;
+      margin-bottom: 1rem;
+    }
+
+    .correct-doc-text {
+      font-family: 'Segoe UI', monospace;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      background: #fafcff;
+      padding: 1rem;
+      border-radius: 20px;
+      clear: both;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="document-card">
+    <div class="document-body">
+      <div id="selectableText" contenteditable="false"></div>
+    </div>
+  </div>
+
+  <div class="action-panel">
+    <div class="btn-group">
+      <button id="checkBtn" class="primary">Проверить</button>
+      <button id="resetBtn" class="secondary">Сбросить выделения</button>
+    </div>
+  </div>
+
+  <div id="resultsArea" class="results-panel" style="display: none;">
+    <div id="feedbackMessage" class="mistake-feedback"></div>
+    <div id="correctBtnContainer" class="correct-btn" style="display: none;">
+      <button id="showCorrectSampleBtn" class="outline">Посмотреть корректный образец</button>
+    </div>
+  </div>
+</div>
+
+<div id="correctSampleModal" class="sample-modal">
+  <div class="modal-card">
+    <button class="close-modal" id="closeModalBtn">&times;</button>
+    <div class="correct-doc-text" id="fullCorrectDocument"></div>
+  </div>
+</div>
+
+<script>
+  const mistakenDocumentText = `ДОВЕРЕННОСТЬ № 1
+
+2026 год
+
+Общество с ограниченной ответственностью «Альфа» (далее — «Общество», «Доверитель»), место нахождения: 165345, г. Москва, ул. Заднепровская, д. 7, ИНН 7708123456, ОГРН 1057741110111, в лице генерального директора Львова Александра Владимировича, действующего на основании Устава, уполномочивает налогового консультанта Глебовой Алле Сергеевне.
+
+представлять интересы Общества в ИФНС с правом:
+
+— подавать и подписывать заявления, письма, уведомления и другие документы;
+
+— получать и подписывать акты, решения, требования, сообщения, уведомления, справки, в том числе справки об отсутствии задолженности по налогам и сборам, акты по результатам камеральной налоговой проверки;
+
+— получать и подписывать справки по проведенной выездной налоговой проверке, акты по результатам выездной налоговой проверки, уведомления о вызове налогоплательщика, извещения о рассмотрении материалов выездной налоговой проверки, требования о представлении документов, решения о привлечении к ответственности за совершение налогового правонарушения или об отказе в привлечении к ответственности за совершение налогового правонарушения, иные решения и документы в рамках выездной налоговой проверки;
+
+— представлять возражения на акт налогового контроля по результатам выездной налоговой проверки, участвовать в рассмотрении материалов выездной налоговой проверки с правом подписи, подавать все необходимые документы.
+
+Доверенность выдана с правом без права передоверия.
+
+Генеральный директор
+
+ООО «Альфа» А. В. Львов`;
+
+  const correctDocumentText = `ДОВЕРЕННОСТЬ № 1
+
+23 января 2026 г.
+
+Общество с ограниченной ответственностью «Альфа» (далее — «Общество», «Доверитель»), место нахождения: 165345, г. Москва, ул. Заднепровская, д. 7, ИНН 7708123456, ОГРН 1057741110111, в лице генерального директора Львова Александра Владимировича, действующего на основании Устава, уполномочивает налогового консультанта Глебовой Алле Сергеевне, паспорт гражданина России серии 4602 № 545177 выдан УВД Воскресенского района г. Московской области 15 апреля 2002 года, зарегистрированного по адресу: 125373, г. Москва, бул. Яна Райниса, д. 24, кв. 474.
+
+представлять интересы Общества в Инспекции Федеральной налоговой службы по району Замоскворечье города Москвы код 7750 с правом:
+
+— подавать и подписывать заявления, письма, уведомления и другие документы;
+
+— получать и подписывать акты, решения, требования, сообщения, уведомления, справки, в том числе справки об отсутствии задолженности по налогам и сборам, акты по результатам камеральной налоговой проверки;
+
+— получать и подписывать справки по проведенной выездной налоговой проверке, акты по результатам выездной налоговой проверки, уведомления о вызове налогоплательщика, извещения о рассмотрении материалов выездной налоговой проверки, требования о представлении документов, решения о привлечении к ответственности за совершение налогового правонарушения или об отказе в привлечении к ответственности за совершение налогового правонарушения, иные решения и документы в рамках выездной налоговой проверки;
+
+— представлять возражения на акт налогового контроля по результатам выездной налоговой проверки, участвовать в рассмотрении материалов выездной налоговой проверки с правом подписи, подавать все необходимые документы.
+
+Доверенность выдана с правом без права передоверия и действительна до 31 декабря 2026 года.
+
+Генеральный директор
+
+ООО «Альфа» А. В. Львов`;
+
+  function formatDocument(text) {
+    let lines = text.split('\n');
+    let formattedLines = [];
+    
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i];
+      
+      if (line.includes('ДОВЕРЕННОСТЬ №')) {
+        formattedLines.push(`<div class="doc-title">${line}</div>`);
+      }
+      else if (line.trim().match(/^\d{4}\s*год$/) || line.trim().match(/^\d{1,2}\s+\w+\s+\d{4}\s*г\.?$/)) {
+        formattedLines.push(`<div class="doc-date-right">${line.trim()}</div>`);
+      }
+      else if (line.includes('Генеральный директор')) {
+        formattedLines.push(`<div style="margin-top: 1rem;">${line}</div>`);
+      }
+      else if (line.includes('ООО «Альфа»') && (line.includes('Львов') || line.match(/[А-Я]\.[А-Я]\.\s+[А-Я][а-я]+/))) {
+        const match = line.match(/(ООО\s+«Альфа»)(.+)/);
+        if (match) {
+          formattedLines.push(`<div class="signature-line">
+            <span class="signature-left">${match[1]}</span>
+            <span class="signature-right">${match[2].trim()}</span>
+          </div>`);
+        } else {
+          formattedLines.push(`<div>${line}</div>`);
+        }
+      }
+      else if (line.trim() === '') {
+        formattedLines.push('<br>');
+      }
+      else {
+        formattedLines.push(`<div>${line}</div>`);
+      }
+    }
+    
+    return formattedLines.join('');
+  }
+
+  // Ошибки с проверкой на частичное совпадение
+  // 1. Дата: реагирует на "2026 год" или просто "2026"
+  // 2. ИФНС: реагирует на "ИФНС"
+  // 3. Представитель: реагирует на часть имени
+  // 4. Срок: реагирует на фразу о доверенности без указания срока
+  const errorDefinitions = [
+    {
+      id: 1,
+      description: "1. Ошибка в дате: указали только год «2026 год». В доверенности обязательно должна быть полная дата (число, месяц, год), иначе доверенность недействительна.",
+      check: (selectedText) => {
+        // реагирует на "2026 год" или просто "2026"
+        return selectedText.includes("2026");
+      }
+    },
+    {
+      id: 2,
+      description: "2. Ошибка в указании налогового органа: Необходимо указать полное наименование: «Инспекция Федеральной налоговой службы по району... и код налогового органа».",
+      check: (selectedText) => {
+        return selectedText.includes("ИФНС");
+      }
+    },
+    {
+      id: 3,
+      description: "3. Отсутствуют полные сведения о представителе: налоговый консультант указан только по имени (Глебовой Алле Сергеевне), но нет паспортных данных (серия, номер, кем выдан, дата) и адреса регистрации. Это нарушает требования к доверенности.",
+      check: (selectedText) => {
+        return (selectedText.includes("Глебовой") || selectedText.includes("Глебовой Алле") || selectedText.includes("налогового консультанта")) &&
+               !selectedText.includes("паспорт") && !selectedText.includes("серии");
+      }
+    },
+    {
+      id: 4,
+      description: "4. Отсутствует срок действия доверенности: в документе нет указания, до какого числа действует доверенность.",
+      check: (selectedText) => {
+        return (selectedText.includes("Доверенность выдана") || selectedText.includes("без права передоверия")) &&
+               !selectedText.includes("действительна до");
+      }
+    }
+  ];
+
+  let highlightSpans = [];
+  let isProcessing = false;
+
+  function handleTextSelection() {
+    if (isProcessing) return;
+    isProcessing = true;
+    setTimeout(() => {
+      const selection = window.getSelection();
+      if (!selection || selection.rangeCount === 0 || selection.isCollapsed) {
+        isProcessing = false;
+        return;
+      }
+      
+      const range = selection.getRangeAt(0);
+      if (range.collapsed || range.toString().trim().length === 0) {
+        isProcessing = false;
+        return;
+      }
+      
+      const selectedText = range.toString();
+      
+      try {
+        const span = document.createElement('span');
+        span.className = 'user-highlight';
+        span.textContent = selectedText;
+        
+        range.deleteContents();
+        range.insertNode(span);
+        
+        highlightSpans.push(span);
+        span.setAttribute('data-selected-text', selectedText);
+        
+        selection.removeAllRanges();
+      } catch(e) {
+        console.warn('Ошибка при выделении', e);
+      }
+      isProcessing = false;
+    }, 10);
+  }
+
+  function clearAllHighlights() {
+    for (let span of highlightSpans) {
+      if (span && span.parentNode) {
+        const textNode = document.createTextNode(span.textContent);
+        span.parentNode.replaceChild(textNode, span);
+      }
+    }
+    highlightSpans = [];
+  }
+
+  function getHighlightedTexts() {
+    return highlightSpans.map(span => span.textContent);
+  }
+
+  function evaluateMistakes() {
+    const highlightedTexts = getHighlightedTexts();
+    
+    const foundIds = [];
+    
+    for (let error of errorDefinitions) {
+      for (let text of highlightedTexts) {
+        if (error.check(text)) {
+          foundIds.push(error.id);
+          break;
+        }
+      }
+    }
+    
+    // Убираем дубликаты
+    const uniqueFoundIds = [...new Set(foundIds)];
+    const foundCount = uniqueFoundIds.length;
+    
+    const resultsDiv = document.getElementById('resultsArea');
+    const feedbackDiv = document.getElementById('feedbackMessage');
+    const correctBtnContainer = document.getElementById('correctBtnContainer');
+    
+    resultsDiv.style.display = 'block';
+    
+    // Формируем вывод: перечисляем ВСЕ ошибки с номерами
+    let html = `<p><strong>Вы нашли ${foundCount} из 4 ошибок.</strong></p>`;
+    
+    for (let error of errorDefinitions) {
+      if (uniqueFoundIds.includes(error.id)) {
+        html += `<div class="error-item" style="color: #2c5a2e;">✅ ${error.description}</div>`;
+      } else {
+        html += `<div class="error-item" style="color: #a94442;">❌ ${error.description}</div>`;
+      }
+    }
+    
+    feedbackDiv.innerHTML = html;
+    
+    if (foundCount === 4) {
+      correctBtnContainer.style.display = 'block';
+    } else {
+      correctBtnContainer.style.display = 'none';
+    }
+  }
+
+  function resetAll() {
+    clearAllHighlights();
+    const resultsDiv = document.getElementById('resultsArea');
+    resultsDiv.style.display = 'none';
+  }
+
+  function initDocument() {
+    const container = document.getElementById('selectableText');
+    const formattedHtml = formatDocument(mistakenDocumentText);
+    container.innerHTML = formattedHtml;
+    
+    document.addEventListener('mouseup', function(e) {
+      if (e.target.closest('button')) return;
+      const selection = window.getSelection();
+      if (selection && !selection.isCollapsed && selection.toString().trim().length > 0) {
+        let parent = selection.anchorNode;
+        let insideContainer = false;
+        while(parent) {
+          if (parent === container) {
+            insideContainer = true;
+            break;
+          }
+          parent = parent.parentNode;
+        }
+        if (insideContainer) {
+          handleTextSelection();
+        }
+      }
+    });
+  }
+
+  const modal = document.getElementById('correctSampleModal');
+  const fullCorrectSpan = document.getElementById('fullCorrectDocument');
+  
+  function showModal() {
+    const formattedCorrect = formatDocument(correctDocumentText);
+    fullCorrectSpan.innerHTML = formattedCorrect;
+    modal.style.display = 'flex';
+  }
+  
+  document.getElementById('checkBtn').addEventListener('click', evaluateMistakes);
+  document.getElementById('resetBtn').addEventListener('click', resetAll);
+  document.addEventListener('click', (e) => {
+    if (e.target.id === 'showCorrectSampleBtn') showModal();
+  });
+  document.getElementById('closeModalBtn').addEventListener('click', () => modal.style.display = 'none');
+  window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+  
+  initDocument();
+</script>
+</body>
+</html>
