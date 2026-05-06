@@ -14,27 +14,27 @@
     body {
       background: #f0f4f9;
       font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, 'Roboto', sans-serif;
-      padding: 2rem 1.5rem;
+      padding: 2rem 1rem;
       color: #1a2c3e;
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 900px;
       margin: 0 auto;
     }
 
     .document-card {
       background: white;
-      border-radius: 24px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      border-radius: 20px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
       overflow: hidden;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
     }
 
     .document-body {
-      padding: 2rem 2.2rem;
-      line-height: 1.65;
-      font-size: 1rem;
+      padding: 1.5rem 1.8rem;
+      line-height: 1.5;
+      font-size: 0.9rem;
       background: #ffffff;
       user-select: text;
     }
@@ -42,45 +42,45 @@
     #selectableText {
       white-space: pre-wrap;
       word-break: break-word;
-      line-height: 1.7;
-      position: relative;
+      line-height: 1.55;
     }
 
     /* Подсветка при выделении (синяя) */
     .selection-highlight {
       background-color: #5a9eff;
       color: white;
-      border-radius: 4px;
-      padding: 0 2px;
+      border-radius: 3px;
+      padding: 0 1px;
     }
 
     /* После проверки: правильно (зеленое) */
     .mark-correct {
       background-color: #4caf50;
       color: white;
-      border-radius: 4px;
-      padding: 0 2px;
+      border-radius: 3px;
+      padding: 0 1px;
     }
 
     /* После проверки: неправильно (красное) */
     .mark-wrong {
       background-color: #f44336;
       color: white;
-      border-radius: 4px;
-      padding: 0 2px;
+      border-radius: 3px;
+      padding: 0 1px;
     }
 
     .doc-date-right {
       text-align: right;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
       font-weight: normal;
+      font-size: 0.85rem;
     }
 
     .signature-line {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-top: 1.5rem;
+      margin-top: 1rem;
       flex-wrap: wrap;
       gap: 0.5rem;
     }
@@ -96,8 +96,8 @@
     .doc-title {
       text-align: center;
       font-weight: 600;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
+      font-size: 1rem;
+      margin-bottom: 0.8rem;
     }
 
     #selectableText::selection {
@@ -106,19 +106,19 @@
 
     .action-panel {
       background: white;
-      border-radius: 20px;
-      padding: 0.8rem 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      border-radius: 16px;
+      padding: 0.6rem 1.2rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 1rem;
+      gap: 0.8rem;
     }
 
     .btn-group {
       display: flex;
-      gap: 1rem;
+      gap: 0.8rem;
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -127,9 +127,9 @@
       font-family: inherit;
       font-weight: 500;
       border: none;
-      padding: 0.6rem 1.5rem;
+      padding: 0.5rem 1.2rem;
       border-radius: 40px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       cursor: pointer;
       background: #f0f4fa;
       color: #1f4d73;
@@ -163,23 +163,23 @@
 
     .results-panel {
       background: #ffffff;
-      border-radius: 20px;
-      padding: 1.2rem 1.6rem;
+      border-radius: 16px;
+      padding: 1rem 1.2rem;
       margin-top: 1rem;
-      border-left: 4px solid #95CAFA;
+      border-left: 3px solid #95CAFA;
       display: none;
     }
 
     .mistake-feedback {
-      font-size: 0.95rem;
-      line-height: 1.5;
+      font-size: 0.85rem;
+      line-height: 1.45;
       color: #2c3e50;
     }
 
     .mistake-feedback .error-item {
-      margin-bottom: 0.75rem;
-      padding: 0.5rem;
-      border-radius: 12px;
+      margin-bottom: 0.6rem;
+      padding: 0.4rem;
+      border-radius: 10px;
     }
 
     .mistake-feedback .error-correct {
@@ -192,8 +192,18 @@
       border-left: 3px solid #f44336;
     }
 
-    .correct-btn {
-      margin-top: 1rem;
+    .summary-badge {
+      background: #eef3fc;
+      padding: 0.4rem 0.8rem;
+      border-radius: 10px;
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+
+    .view-sample-btn {
+      margin-top: 0.8rem;
+      text-align: center;
     }
 
     .sample-modal {
@@ -212,48 +222,35 @@
 
     .modal-card {
       background: white;
-      max-width: 850px;
+      max-width: 750px;
       width: 90%;
       max-height: 85vh;
       overflow-y: auto;
-      padding: 1.8rem 2rem;
-      box-shadow: 0 25px 40px rgba(0,0,0,0.2);
-      border-radius: 28px;
+      padding: 1.2rem 1.5rem;
+      box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+      border-radius: 24px;
     }
 
     .close-modal {
       float: right;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       cursor: pointer;
       background: none;
       border: none;
       line-height: 1;
       color: #888;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
 
     .correct-doc-text {
       font-family: 'Segoe UI', monospace;
       white-space: pre-wrap;
-      font-size: 0.9rem;
-      line-height: 1.55;
+      font-size: 0.85rem;
+      line-height: 1.5;
       background: #fafcff;
-      padding: 1rem;
-      border-radius: 20px;
+      padding: 0.8rem;
+      border-radius: 16px;
       clear: both;
-    }
-
-    .summary-badge {
-      background: #eef3fc;
-      padding: 0.5rem 1rem;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-      font-weight: 500;
-    }
-
-    .view-sample-btn {
-      margin-top: 1rem;
-      text-align: center;
     }
   </style>
 </head>
@@ -280,7 +277,7 @@
 <div id="correctSampleModal" class="sample-modal">
   <div class="modal-card">
     <button class="close-modal" id="closeModalBtn">&times;</button>
-    <h3 style="margin-bottom: 1rem; color: #1f6e9c;">Правильная доверенность</h3>
+    <h3 style="margin-bottom: 0.8rem; color: #1f6e9c; font-size: 1.1rem;">Правильная доверенность</h3>
     <div class="correct-doc-text" id="fullCorrectDocument"></div>
   </div>
 </div>
@@ -344,7 +341,7 @@
         formattedLines.push(`<div class="doc-date-right">${line.trim()}</div>`);
       }
       else if (line.includes('Генеральный директор')) {
-        formattedLines.push(`<div style="margin-top: 1rem;">${line}</div>`);
+        formattedLines.push(`<div style="margin-top: 0.8rem;">${line}</div>`);
       }
       else if (line.includes('ООО «Альфа»') && (line.includes('Львов') || line.match(/[А-Я]\.[А-Я]\.\s+[А-Я][а-я]+/))) {
         const match = line.match(/(ООО\s+«Альфа»)(.+)/);
@@ -396,7 +393,6 @@
     }
   ];
 
-  // Хранилище выделенных элементов
   let selectedSpans = [];
 
   function handleTextSelection() {
@@ -409,20 +405,15 @@
     if (selectedText.trim().length === 0) return;
     
     try {
-      // Создаем span с синей подсветкой
       const span = document.createElement('span');
       span.className = 'selection-highlight';
       span.textContent = selectedText;
       span.setAttribute('data-original-text', selectedText);
       
-      // Заменяем выделение на span
       range.deleteContents();
       range.insertNode(span);
       
-      // Сохраняем span для проверки
       selectedSpans.push(span);
-      
-      // Снимаем выделение
       selection.removeAllRanges();
     } catch(e) {
       console.warn('Ошибка при выделении', e);
@@ -430,7 +421,6 @@
   }
 
   function clearAllHighlights() {
-    // Возвращаем все выделенные спаны обратно в текст
     for (let span of selectedSpans) {
       if (span && span.parentNode) {
         const textNode = document.createTextNode(span.textContent);
@@ -438,31 +428,25 @@
       }
     }
     selectedSpans = [];
-    
-    // Скрываем панель результатов
     const resultsDiv = document.getElementById('resultsArea');
     resultsDiv.style.display = 'none';
   }
 
   function evaluateMistakes() {
-    // Проверяем каждое выделение
     const foundErrorIds = new Set();
     
     for (let span of selectedSpans) {
       const text = span.textContent;
       let isError = false;
-      let matchedErrorId = null;
       
       for (let error of errorDefinitions) {
         if (error.check(text)) {
           isError = true;
-          matchedErrorId = error.id;
           foundErrorIds.add(error.id);
           break;
         }
       }
       
-      // Меняем класс в зависимости от правильности
       if (isError) {
         span.classList.remove('selection-highlight');
         span.classList.add('mark-correct');
@@ -472,27 +456,21 @@
       }
     }
     
-    // Подсчитываем найденные ошибки
     const foundCount = foundErrorIds.size;
-    
-    // Формируем отчет
     const resultsDiv = document.getElementById('resultsArea');
     const feedbackDiv = document.getElementById('feedbackMessage');
     
     let html = `<div class="summary-badge">📊 Вы нашли ${foundCount} из 4 ошибок</div>`;
-    html += `<div style="margin-top: 0.5rem;">
-      <button id="viewDetailsBtn" class="outline" style="background: #eef3fc;">Посмотреть список ошибок</button>
+    html += `<div style="margin-top: 0.4rem;">
+      <button id="viewDetailsBtn" class="outline" style="background: #eef3fc; font-size: 0.8rem;">Посмотреть список ошибок</button>
     </div>`;
-    
-    // Добавляем кнопку просмотра правильного образца (всегда после проверки)
     html += `<div class="view-sample-btn">
-      <button id="viewSampleAfterCheckBtn" class="outline" style="background: #eef3fc; border-color: #4caf50; color: #2e7d32;">📖 Посмотреть правильный образец</button>
+      <button id="viewSampleAfterCheckBtn" class="outline" style="background: #eef3fc; border-color: #4caf50; color: #2e7d32; font-size: 0.8rem;">📖 Посмотреть правильный образец</button>
     </div>`;
     
     feedbackDiv.innerHTML = html;
     resultsDiv.style.display = 'block';
     
-    // Обработчик кнопки "Посмотреть список ошибок"
     const viewBtn = document.getElementById('viewDetailsBtn');
     if (viewBtn) {
       viewBtn.onclick = () => {
@@ -500,45 +478,37 @@
         for (let error of errorDefinitions) {
           const isFound = foundErrorIds.has(error.id);
           if (isFound) {
-            detailsHtml += `<div class="error-item error-correct" style="background: #e8f5e9; padding: 0.5rem; border-radius: 12px; margin-bottom: 0.75rem;">
+            detailsHtml += `<div class="error-item error-correct" style="background: #e8f5e9; padding: 0.4rem; border-radius: 10px; margin-bottom: 0.6rem;">
               <div style="color: #2e7d32; font-weight: 500;">✅ ${error.description}</div>
-              <div style="color: #555; margin-top: 5px; font-size: 0.85rem;">${error.correctExample}</div>
+              <div style="color: #555; margin-top: 4px; font-size: 0.8rem;">${error.correctExample}</div>
             </div>`;
           } else {
-            detailsHtml += `<div class="error-item error-wrong" style="background: #ffebee; padding: 0.5rem; border-radius: 12px; margin-bottom: 0.75rem;">
+            detailsHtml += `<div class="error-item error-wrong" style="background: #ffebee; padding: 0.4rem; border-radius: 10px; margin-bottom: 0.6rem;">
               <div style="color: #c62828; font-weight: 500;">❌ ${error.description}</div>
-              <div style="color: #555; margin-top: 5px; font-size: 0.85rem;">${error.correctExample}</div>
+              <div style="color: #555; margin-top: 4px; font-size: 0.8rem;">${error.correctExample}</div>
             </div>`;
           }
         }
-        detailsHtml += `<div class="view-sample-btn" style="margin-top: 1rem;">
-          <button id="viewSampleFromDetailsBtn" class="outline" style="background: #eef3fc; border-color: #4caf50; color: #2e7d32;">📖 Посмотреть правильный образец</button>
+        detailsHtml += `<div class="view-sample-btn" style="margin-top: 0.8rem;">
+          <button id="viewSampleFromDetailsBtn" class="outline" style="background: #eef3fc; border-color: #4caf50; color: #2e7d32; font-size: 0.8rem;">📖 Посмотреть правильный образец</button>
         </div>`;
-        detailsHtml += `<div style="margin-top: 0.5rem;">
-          <button id="backToResultBtn" class="outline">← Назад к результату</button>
+        detailsHtml += `<div style="margin-top: 0.4rem;">
+          <button id="backToResultBtn" class="outline" style="font-size: 0.8rem;">← Назад к результату</button>
         </div>`;
         feedbackDiv.innerHTML = detailsHtml;
         
         const backBtn = document.getElementById('backToResultBtn');
-        if (backBtn) {
-          backBtn.onclick = () => evaluateMistakes();
-        }
+        if (backBtn) backBtn.onclick = () => evaluateMistakes();
         const viewSampleBtn = document.getElementById('viewSampleFromDetailsBtn');
-        if (viewSampleBtn) {
-          viewSampleBtn.onclick = () => showModal();
-        }
+        if (viewSampleBtn) viewSampleBtn.onclick = () => showModal();
       };
     }
     
-    // Обработчик кнопки просмотра правильного образца
     const viewSampleBtn = document.getElementById('viewSampleAfterCheckBtn');
-    if (viewSampleBtn) {
-      viewSampleBtn.onclick = () => showModal();
-    }
+    if (viewSampleBtn) viewSampleBtn.onclick = () => showModal();
   }
 
   function resetAll() {
-    // Очищаем выделения
     for (let span of selectedSpans) {
       if (span && span.parentNode) {
         const textNode = document.createTextNode(span.textContent);
@@ -546,13 +516,9 @@
       }
     }
     selectedSpans = [];
-    
-    // Пересоздаем документ в исходном виде
     const container = document.getElementById('selectableText');
     const formattedHtml = formatDocument(mistakenDocumentText);
     container.innerHTML = formattedHtml;
-    
-    // Скрываем панель результатов
     const resultsDiv = document.getElementById('resultsArea');
     resultsDiv.style.display = 'none';
   }
@@ -562,13 +528,10 @@
     const formattedHtml = formatDocument(mistakenDocumentText);
     container.innerHTML = formattedHtml;
     
-    // Обработчик выделения текста
     document.addEventListener('mouseup', function(e) {
       if (e.target.closest('button')) return;
-      
       const selection = window.getSelection();
       if (selection && !selection.isCollapsed && selection.toString().trim().length > 0) {
-        // Проверяем, что выделение внутри контейнера
         let parent = selection.anchorNode;
         let insideContainer = false;
         while(parent) {
@@ -578,9 +541,7 @@
           }
           parent = parent.parentNode;
         }
-        if (insideContainer) {
-          handleTextSelection();
-        }
+        if (insideContainer) handleTextSelection();
       }
     });
   }
